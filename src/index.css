@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+    background-color: #FFFFFF;
+    background-image: radial-gradient(circle, #E5E7EB 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-electric-500 text-white px-6 py-3 rounded-2xl font-semibold transition-all duration-300 hover:bg-electric-600 hover:shadow-lg hover:shadow-electric-500/25 active:scale-[0.98] inline-flex items-center gap-2;
+  }
+
+  .btn-secondary {
+    @apply bg-white border border-gray-200 text-obsidian px-6 py-3 rounded-2xl font-semibold transition-all duration-300 hover:border-electric-500 hover:text-electric-500 active:scale-[0.98] inline-flex items-center gap-2;
+  }
+
+  .card {
+    @apply bg-white border border-gray-100 rounded-2xl p-6 transition-all duration-300 hover:shadow-xl hover:shadow-gray-200/50 hover:border-gray-200;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 border border-gray-200 rounded-xl text-obsidian placeholder-gray-400 transition-all duration-200 focus:outline-none focus:border-electric-500 focus:ring-2 focus:ring-electric-500/20;
+  }
+
+  .section-header {
+    @apply text-xs font-semibold tracking-widest text-gray-500 uppercase flex items-center gap-3;
+  }
+
+  .section-header::before {
+    content: '';
+    @apply w-8 h-px bg-electric-500;
+  }
+}
+
+@layer utilities {
+  @keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @keyframes marquee-reverse {
+    0%   { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+
+  .marquee-track {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  }
+
+  .marquee-inner {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+  }
+
+  .marquee-inner--fwd {
+    animation: marquee 18s linear infinite;
+  }
+
+  .marquee-inner--rev {
+    animation: marquee-reverse 18s linear infinite;
+  }
+}
