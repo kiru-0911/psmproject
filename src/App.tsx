@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -13,8 +13,6 @@ import {
   MapPin,
   Menu,
   X,
-  Instagram,
-  Linkedin,
   ChevronLeft,
   ChevronRight,
   TrendingUp,
@@ -47,12 +45,12 @@ function App() {
     'PETA India',
   ];
 
-  const portfolioWork = [
+  const portfolioWork = useMemo(() => [
     {
       id: 'ooh',
       tag: 'OOH',
       title: 'Out of Home',
-      subtitle: 'Hoardings · Unipoles · Gantries',
+      subtitle: 'Hoardings | Unipoles | Gantries',
       images: [
         '/portfolio/ooh-1.png',
         '/portfolio/ooh-2.png',
@@ -62,7 +60,7 @@ function App() {
       id: 'transit',
       tag: 'TRANSIT',
       title: 'Transit Advertising',
-      subtitle: 'Buses · Metros · Autos · Shikaras · Website',
+      subtitle: 'Buses | Metros | Autos | Shikaras | Website',
       images: [
         '/portfolio/transit-1.png',
         '/portfolio/transit-2.png',
@@ -75,7 +73,7 @@ function App() {
       id: 'cinema',
       tag: 'CINEMA',
       title: 'Cinema Advertising',
-      subtitle: 'Multiplexes · Single Screens',
+      subtitle: 'Multiplexes | Single Screens',
       images: [
         '/portfolio/cinema-1.png',
       ],
@@ -84,7 +82,7 @@ function App() {
       id: 'btl',
       tag: 'BTL',
       title: 'BTL & Activations',
-      subtitle: 'On-Ground · Experiential',
+      subtitle: 'On-Ground | Experiential',
       images: [
         '/portfolio/btl-1.png',
         '/portfolio/btl-2.png',
@@ -94,7 +92,7 @@ function App() {
       id: 'print',
       tag: 'PRINT',
       title: 'Print Media',
-      subtitle: 'Newspapers · Magazines',
+      subtitle: 'Newspapers | Magazines',
       images: [
         '/portfolio/print-1.png',
       ],
@@ -103,7 +101,7 @@ function App() {
       id: 'airport',
       tag: 'AIRPORT',
       title: 'Airport Advertising', 
-      subtitle: 'Terminals · Lounges · Jet Bridges',
+      subtitle: 'Terminals | Lounges | Jet Bridges',
       images: [
         '/portfolio/airport-1.png',
         '/portfolio/airport-2.png',
@@ -111,9 +109,28 @@ function App() {
       
       ],
     },
-  ];
+  ], []);
 
   const [carouselIndexes, setCarouselIndexes] = useState<Record<string, number>>({});
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setCarouselIndexes((prev) => {
+        const nextIndexes = { ...prev };
+
+        portfolioWork.forEach((work) => {
+          if (work.images.length > 1) {
+            nextIndexes[work.id] =
+              prev[work.id] !== undefined ? (prev[work.id] + 1) % work.images.length : 1;
+          }
+        });
+
+        return nextIndexes;
+      });
+    }, 3000);
+
+    return () => window.clearInterval(intervalId);
+  }, [portfolioWork]);
 
   const handleCarouselPrev = (id: string, totalImages: number) => {
     setCarouselIndexes((prev) => ({
