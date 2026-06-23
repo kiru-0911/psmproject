@@ -1,4 +1,4 @@
-import { StrictMode, useState, useEffect } from 'react';
+import { StrictMode, useState, useEffect, useLayoutEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import PrivacyPolicy from './PrivacyPolicy.tsx';
@@ -7,6 +7,15 @@ import './index.css';
 
 function Router() {
   const [path, setPath] = useState(window.location.pathname);
+
+  useLayoutEffect(() => {
+    const html = document.documentElement;
+    const previousScrollBehavior = html.style.scrollBehavior;
+
+    html.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    html.style.scrollBehavior = previousScrollBehavior;
+  }, [path]);
 
   useEffect(() => {
     const onPop = () => setPath(window.location.pathname);
