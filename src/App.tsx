@@ -299,7 +299,7 @@ function App() {
           <div className="section-header mb-12">Our Work</div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {portfolioWork.map((work, index) => {
+            {portfolioWork.map((work) => {
               const currentIndex = carouselIndexes[work.id] ?? 0;
               const hasMultipleImages = work.images.length > 1;
 
@@ -325,11 +325,6 @@ function App() {
                   {/* Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-obsidian/90 via-obsidian/20 to-transparent z-10" />
 
-                  {/* Number Badge */}
-                  <div className="absolute top-4 left-4 z-20 text-white/30 text-5xl font-extrabold">
-                    {String(index + 1).padStart(2, '0')}
-                  </div>
-
                   {/* Carousel Navigation */}
                   {hasMultipleImages && (
                     <div className="absolute top-4 right-4 z-20 flex gap-2">
@@ -351,15 +346,6 @@ function App() {
                       >
                         <ChevronRight className="w-4 h-4 text-white" />
                       </button>
-                    </div>
-                  )}
-
-                  {/* Image Counter */}
-                  {hasMultipleImages && (
-                    <div className="absolute top-16 right-4 z-20 px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full">
-                      <span className="text-white text-xs font-medium">
-                        {currentIndex + 1} / {work.images.length}
-                      </span>
                     </div>
                   )}
 
