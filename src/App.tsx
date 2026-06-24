@@ -146,7 +146,14 @@ function App() {
     }));
   };
 
-  const navItems = ['About', 'Services', 'Why Us', 'Work', 'Clients', 'Contact'];
+  const navItems = [
+    { label: 'About Us', href: '#about' },
+    { label: 'Our Work', href: '#work' },
+    { label: 'Why brands choose us', href: '#why-us' },
+    { label: 'Services', href: '#services' },
+    { label: 'Clients', href: '#clients' },
+    { label: 'Contact', href: '#contact' },
+  ];
 
   return (
     <div className="min-h-screen bg-white relative">
@@ -168,11 +175,11 @@ function App() {
             <div className="hidden lg:flex items-center gap-8">
               {navItems.map((item) => (
                 <a
-                  key={item}
-                  href={`#${item.toLowerCase().replace(' ', '-')}`}
+                  key={item.href}
+                  href={item.href}
                   className="text-sm font-medium text-gray-600 hover:text-electric-500 transition-colors tracking-wide"
                 >
-                  {item}
+                  {item.label}
                 </a>
               ))}
             </div>
@@ -199,12 +206,12 @@ function App() {
               <div className="flex flex-col gap-4">
                 {navItems.map((item) => (
                   <a
-                    key={item}
-                    href={`#${item.toLowerCase().replace(' ', '-')}`}
+                    key={item.href}
+                    href={item.href}
                     className="text-sm font-medium text-gray-600 hover:text-electric-500 transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    {item}
+                    {item.label}
                   </a>
                 ))}
                 <a href="#contact" className="btn-primary w-full justify-center">
@@ -282,6 +289,91 @@ function App() {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Work Portfolio */}
+      <section id="work" className="py-20 lg:py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="section-header mb-12">Our Work</div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {portfolioWork.map((work, index) => {
+              const currentIndex = carouselIndexes[work.id] ?? 0;
+              const hasMultipleImages = work.images.length > 1;
+
+              return (
+                <div
+                  key={work.id}
+                  className="group relative aspect-[3/4] rounded-2xl overflow-hidden bg-gray-100 cursor-pointer"
+                >
+                  {/* Image Carousel */}
+                  <div className="absolute inset-0">
+                    {work.images.map((img, imgIndex) => (
+                      <img
+                        key={imgIndex}
+                        src={img}
+                        alt={`${work.title} ${imgIndex + 1}`}
+                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+                          imgIndex === currentIndex ? 'opacity-100' : 'opacity-0'
+                        }`}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-obsidian/90 via-obsidian/20 to-transparent z-10" />
+
+                  {/* Number Badge */}
+                  <div className="absolute top-4 left-4 z-20 text-white/30 text-5xl font-extrabold">
+                    {String(index + 1).padStart(2, '0')}
+                  </div>
+
+                  {/* Carousel Navigation */}
+                  {hasMultipleImages && (
+                    <div className="absolute top-4 right-4 z-20 flex gap-2">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleCarouselPrev(work.id, work.images.length);
+                        }}
+                        className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/40 transition-colors"
+                      >
+                        <ChevronLeft className="w-4 h-4 text-white" />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleCarouselNext(work.id, work.images.length);
+                        }}
+                        className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/40 transition-colors"
+                      >
+                        <ChevronRight className="w-4 h-4 text-white" />
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Image Counter */}
+                  {hasMultipleImages && (
+                    <div className="absolute top-16 right-4 z-20 px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full">
+                      <span className="text-white text-xs font-medium">
+                        {currentIndex + 1} / {work.images.length}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Bottom Content */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
+                    <span className="inline-block px-3 py-1 bg-electric-500 text-white text-xs font-semibold rounded-full mb-3">
+                      {work.tag}
+                    </span>
+                    <h3 className="text-xl font-bold text-white mb-1">{work.title}</h3>
+                    <p className="text-gray-300 text-sm">{work.subtitle}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -405,91 +497,6 @@ function App() {
                 Premium visibility across high-value travelers and decision-makers.
               </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Our Work Portfolio */}
-      <section id="work" className="py-20 lg:py-32 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="section-header mb-12">Our Work</div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {portfolioWork.map((work, index) => {
-              const currentIndex = carouselIndexes[work.id] ?? 0;
-              const hasMultipleImages = work.images.length > 1;
-
-              return (
-                <div
-                  key={work.id}
-                  className="group relative aspect-[3/4] rounded-2xl overflow-hidden bg-gray-100 cursor-pointer"
-                >
-                  {/* Image Carousel */}
-                  <div className="absolute inset-0">
-                    {work.images.map((img, imgIndex) => (
-                      <img
-                        key={imgIndex}
-                        src={img}
-                        alt={`${work.title} ${imgIndex + 1}`}
-                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
-                          imgIndex === currentIndex ? 'opacity-100' : 'opacity-0'
-                        }`}
-                      />
-                    ))}
-                  </div>
-
-                  {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-obsidian/90 via-obsidian/20 to-transparent z-10" />
-
-                  {/* Number Badge */}
-                  <div className="absolute top-4 left-4 z-20 text-white/30 text-5xl font-extrabold">
-                    {String(index + 1).padStart(2, '0')}
-                  </div>
-
-                  {/* Carousel Navigation */}
-                  {hasMultipleImages && (
-                    <div className="absolute top-4 right-4 z-20 flex gap-2">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleCarouselPrev(work.id, work.images.length);
-                        }}
-                        className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/40 transition-colors"
-                      >
-                        <ChevronLeft className="w-4 h-4 text-white" />
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleCarouselNext(work.id, work.images.length);
-                        }}
-                        className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/40 transition-colors"
-                      >
-                        <ChevronRight className="w-4 h-4 text-white" />
-                      </button>
-                    </div>
-                  )}
-
-                  {/* Image Counter */}
-                  {hasMultipleImages && (
-                    <div className="absolute top-16 right-4 z-20 px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full">
-                      <span className="text-white text-xs font-medium">
-                        {currentIndex + 1} / {work.images.length}
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Bottom Content */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
-                    <span className="inline-block px-3 py-1 bg-electric-500 text-white text-xs font-semibold rounded-full mb-3">
-                      {work.tag}
-                    </span>
-                    <h3 className="text-xl font-bold text-white mb-1">{work.title}</h3>
-                    <p className="text-gray-300 text-sm">{work.subtitle}</p>
-                  </div>
-                </div>
-              );
-            })}
           </div>
         </div>
       </section>
