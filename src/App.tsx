@@ -50,7 +50,7 @@ function App() {
       id: 'ooh',
       tag: 'OOH',
       title: 'Out of Home',
-      subtitle: 'Hoardings | Unipoles | Gantries',
+      subtitle: 'Hoarding | Gantry | Bus Shelter',
       images: [
         '/portfolio/ooh-1.png',
         '/portfolio/ooh-2.png',
@@ -60,7 +60,7 @@ function App() {
       id: 'transit',
       tag: 'TRANSIT',
       title: 'Transit Advertising',
-      subtitle: 'Buses | Metros | Autos | Shikaras | Website',
+      subtitle: 'Bus | Metro | Cab | Auto | Shikara',
       images: [
         '/portfolio/transit-1.png',
         '/portfolio/transit-2.png',
@@ -73,7 +73,7 @@ function App() {
       id: 'cinema',
       tag: 'CINEMA',
       title: 'Cinema Advertising',
-      subtitle: 'Multiplexes | Single Screens',
+      subtitle: 'Multiplex | Single Screen',
       images: [
         '/portfolio/cinema-1.png',
       ],
@@ -92,7 +92,7 @@ function App() {
       id: 'print',
       tag: 'PRINT',
       title: 'Print Media',
-      subtitle: 'Newspapers | Magazines',
+      subtitle: 'Newspaper | Magazine',
       images: [
         '/portfolio/print-1.png',
       ],
@@ -101,7 +101,7 @@ function App() {
       id: 'airport',
       tag: 'AIRPORT',
       title: 'Airport Advertising', 
-      subtitle: 'Terminals | Lounges | Jet Bridges',
+      subtitle: 'Terminal | Lounge | Jet Bridge',
       images: [
         '/portfolio/airport-1.png',
         '/portfolio/airport-2.png',
