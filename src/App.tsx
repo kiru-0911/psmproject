@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 import {
   ArrowRight,
   ArrowUpRight,
-  Megaphone,
   TrainFront,
   Clapperboard,
   Radio,
@@ -18,6 +17,40 @@ import {
   TrendingUp,
   BadgePercent,
 } from 'lucide-react';
+
+function BillboardIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v7A1.5 1.5 0 0 1 19 15.5H5A1.5 1.5 0 0 1 3.5 14V7A1.5 1.5 0 0 1 5 5.5Z"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8 5.5 8.75 3.5H6.75M12 5.5V3.5h-1.25M16 5.5l.75-2h-2"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M7 15.5v2M17 15.5v2M4 17.5h16M12 17.5v3.5"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -421,7 +454,7 @@ function App() {
             {/* OOH */}
             <div className="card">
               <div className="w-12 h-12 bg-electric-50 rounded-xl flex items-center justify-center mb-4">
-                <Megaphone className="w-6 h-6 text-electric-500" strokeWidth={1.5} />
+                <BillboardIcon className="w-7 h-7 text-electric-500" />
               </div>
               <h3 className="text-xl font-bold text-obsidian mb-3">Out of Home (OOH)</h3>
               <p className="text-gray-600 leading-relaxed">
