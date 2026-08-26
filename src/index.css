@@ -46,8 +46,8 @@
 
 @layer utilities {
   @keyframes marquee {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    0%   { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); }
   }
 
   @keyframes marquee-reverse {
@@ -65,6 +65,8 @@
     display: flex;
     width: max-content;
     will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
 
   .marquee-inner--fwd {
@@ -73,5 +75,13 @@
 
   .marquee-inner--rev {
     animation: marquee-reverse 50s linear infinite;
+  }
+
+  /* iOS Safari can drop animated content when it is composited inside a CSS mask. */
+  @supports (-webkit-touch-callout: none) {
+    .marquee-track {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
   }
 }
