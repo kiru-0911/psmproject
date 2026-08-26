@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import {
   ArrowRight,
@@ -55,6 +55,7 @@ function BillboardIcon({ className = '' }: { className?: string }) {
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const clientMarqueeRef = useRef<HTMLDivElement>(null);
 
   // QUERY FORM
   const [formData, setFormData] = useState({
@@ -228,6 +229,40 @@ function App() {
 
     return () => window.clearInterval(intervalId);
   }, [portfolioWork]);
+
+  useEffect(() => {
+    const isSafariOnIPhone = /iPhone|iPad|iPod/.test(navigator.userAgent)
+      && /Safari/.test(navigator.userAgent)
+      && !/CriOS|FxiOS|EdgiOS/.test(navigator.userAgent);
+
+    if (!isSafariOnIPhone || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
+    const track = clientMarqueeRef.current;
+    if (!track) return;
+
+    let animationFrameId = 0;
+    let previousTime = performance.now();
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - previousTime;
+      previousTime = currentTime;
+      const loopWidth = track.scrollWidth / 2;
+
+      track.scrollLeft += elapsed * 0.02;
+
+      if (track.scrollLeft >= loopWidth) {
+        track.scrollLeft -= loopWidth;
+      }
+
+      animationFrameId = window.requestAnimationFrame(animate);
+    };
+
+    animationFrameId = window.requestAnimationFrame(animate);
+
+    return () => window.cancelAnimationFrame(animationFrameId);
+  }, []);
 
   const handleCarouselPrev = (id: string, totalImages: number) => {
     setCarouselIndexes((prev) => ({
@@ -590,7 +625,7 @@ function App() {
           <div className="section-header mb-12">Clients</div>
 
           {/* Sliding Marquee */}
-          <div className="marquee-track">
+          <div ref={clientMarqueeRef} className="marquee-track">
             <div className="marquee-inner marquee-inner--fwd">
               {[...clients, ...clients].map((client, index) => (
                 <img

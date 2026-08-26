@@ -97,8 +97,5 @@
       animation: none;
     }
 
-    .marquee-inner img:nth-child(n + 21) {
-      display: none;
-    }
   }
 }
