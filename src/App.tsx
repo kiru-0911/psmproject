@@ -589,29 +589,15 @@ function App() {
         <div className="max-w-7xl mx-auto">
           <div className="section-header mb-12">Clients</div>
 
-          {/* Sliding Marquee - Row 1 */}
-          <div className="marquee-track mb-4">
+          {/* Sliding Marquee */}
+          <div className="marquee-track">
             <div className="marquee-inner marquee-inner--fwd">
               {[...clients, ...clients, ...clients, ...clients].map((client, index) => (
                 <img
                   key={index}
                   src={client.logo}
                   alt={client.name}
-                  className="h-8 w-auto flex-shrink-0 mx-8 object-contain"
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Sliding Marquee - Row 2 (Reverse direction) */}
-          <div className="marquee-track">
-            <div className="marquee-inner marquee-inner--rev">
-              {[...clients, ...clients, ...clients, ...clients].map((client, index) => (
-                <img
-                  key={index}
-                  src={client.logo}
-                  alt={client.name}
-                  className="h-8 w-auto flex-shrink-0 mx-8 object-contain"
+                  className="h-12 w-auto flex-shrink-0 mx-8 object-contain"
                 />
               ))}
             </div>
