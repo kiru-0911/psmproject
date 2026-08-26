@@ -73,6 +73,7 @@
 
   .marquee-inner--fwd {
     animation: marquee 50s linear infinite;
+    -webkit-animation: marquee 50s linear infinite;
   }
 
   .marquee-inner--rev {
@@ -91,10 +92,6 @@
 
     .marquee-track::-webkit-scrollbar {
       display: none;
-    }
-
-    .marquee-inner--fwd {
-      animation: none;
     }
 
   }
