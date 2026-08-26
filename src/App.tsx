@@ -593,16 +593,12 @@ function App() {
           <div className="marquee-track mb-4">
             <div className="marquee-inner marquee-inner--fwd">
               {[...clients, ...clients, ...clients, ...clients].map((client, index) => (
-                <div
+                <img
                   key={index}
-                  className="flex-shrink-0 mx-2 px-6 py-4 bg-white border border-gray-100 rounded-[2rem] shadow-sm hover:shadow-md hover:border-electric-200 hover:bg-electric-50/30 transition-all duration-300 cursor-default"
-                >
-                     <img
-                     src={client.logo}
-                     alt={client.name}
-                     className="h-8 w-auto object-contain"
-                     />
-                </div>
+                  src={client.logo}
+                  alt={client.name}
+                  className="h-8 w-auto flex-shrink-0 mx-8 object-contain"
+                />
               ))}
             </div>
           </div>
@@ -611,16 +607,12 @@ function App() {
           <div className="marquee-track">
             <div className="marquee-inner marquee-inner--rev">
               {[...clients, ...clients, ...clients, ...clients].map((client, index) => (
-                <div
+                <img
                   key={index}
-                  className="flex-shrink-0 mx-2 px-6 py-4 bg-white border border-gray-100 rounded-[2rem] shadow-sm hover:shadow-md hover:border-electric-200 hover:bg-electric-50/30 transition-all duration-300 cursor-default"
-                >
-                     <img
-                     src={client.logo}
-                     alt={client.name}
-                     className="h-8 w-auto object-contain"
-                     />
-                </div>
+                  src={client.logo}
+                  alt={client.name}
+                  className="h-8 w-auto flex-shrink-0 mx-8 object-contain"
+                />
               ))}
             </div>
           </div>
