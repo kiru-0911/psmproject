@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import emailjs from '@emailjs/browser';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -6,9 +7,9 @@ import {
   Clapperboard,
   Radio,
   Newspaper,
-  Plane,
   Mail,
   Phone,
+  Plane,
   MapPin,
   Menu,
   X,
@@ -55,27 +56,90 @@ function BillboardIcon({ className = '' }: { className?: string }) {
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // QUERY FORM
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    company: '',
+    budget: '',
+    message: '',
+  });
+
+  const [sending, setSending] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setSending(true);
+    setSubmitted(false);
+
+    try {
+      await emailjs.send(
+        'service_fizdwh3',
+        'template_f96ts2v',
+        {
+          full_name: formData.fullName,
+          email: formData.email,
+          company: formData.company,
+          budget: formData.budget,
+          message: formData.message,
+        },
+        'XMymkLmSCHqvHVJDA'
+      );
+
+      setSubmitted(true);
+
+      setFormData({
+        fullName: '',
+        email: '',
+        company: '',
+        budget: '',
+        message: '',
+      });
+    } catch (error) {
+      console.error(error);
+      alert('Unable to send your query. Please try again.');
+    } finally {
+      setSending(false);
+    }
+  };
+
+  // YOUR EXISTING CLIENTS
   const clients = [
-    'California Burrito',
-    'Cipla Health',
-    'Giva',
-    'Big Basket',
-    'Aakash Institute',
-    'Physics Wallah',
-    'Amazon',
-    'Flipkart',
-    'Spinny',
-    'Swiggy',
-    'KEI Wires & Cables',
-    'Quest Global',
-    'Tumble Dry',
-    'Blinkit',
-    'Analytics India',
-    'Nykaa',
-    'MTR',
-    'Wonderla',
-    'Liva',
-    'PETA India',
+    { name: 'California Burrito', logo: '/clients/CB.jpg' },
+    { name: 'Cipla Health', logo: '/clients/Cipla Health.jpg' },
+    { name: 'Giva', logo: '/clients/GIVA.jpg' },
+    { name: 'Big Basket', logo: '/clients/Big Basket.jpg' },
+    { name: 'Aakash Institute', logo: '/clients/Aakash.jpg' },
+    { name: 'Physics Wallah', logo: '/clients/Physics Wallah.jpg' },
+    { name: 'Amazon', logo: '/clients/Amazon.in.jpg' },
+    { name: 'Flipkart', logo: '/clients/Flipkart.jpg' },
+    { name: 'Spinny', logo: '/clients/Spinny logo.png' },
+    { name: 'Swiggy', logo: '/clients/Swiggy.jpg' },
+    { name: 'KEI Wires & Cables', logo: '/clients/KEI.jpg' },
+    { name: 'Quest Global', logo: '/clients/Quest.jpg' },
+    { name: 'Tumble Dry', logo: '/clients/Tumbledry.jpg' },
+    { name: 'Blinkit', logo: '/clients/Blinkit.jpg' },
+    { name: 'Analytics India', logo: '/clients/Analytics India.jpg' },
+    { name: 'Nykaa', logo: '/clients/Nykaa.jpg' },
+    { name: 'MTR', logo: '/clients/mtr.jpg' },
+    { name: 'Wonderla', logo: '/clients/Wonderla.jpg' },
+    { name: 'Liva', logo: '/clients/Liva.jpg' },
+    { name: 'PETA India', logo: '/clients/Peta India.jpg' },
   ];
 
   const portfolioWork = useMemo(() => [
@@ -533,7 +597,11 @@ function App() {
                   key={index}
                   className="flex-shrink-0 mx-2 px-6 py-4 bg-white border border-gray-100 rounded-[2rem] shadow-sm hover:shadow-md hover:border-electric-200 hover:bg-electric-50/30 transition-all duration-300 cursor-default"
                 >
-                  <span className="text-obsidian font-medium whitespace-nowrap">{client}</span>
+                     <img
+                     src={client.logo}
+                     alt={client.name}
+                     className="h-8 w-auto object-contain"
+                     />
                 </div>
               ))}
             </div>
@@ -547,7 +615,11 @@ function App() {
                   key={index}
                   className="flex-shrink-0 mx-2 px-6 py-4 bg-white border border-gray-100 rounded-[2rem] shadow-sm hover:shadow-md hover:border-electric-200 hover:bg-electric-50/30 transition-all duration-300 cursor-default"
                 >
-                  <span className="text-obsidian font-medium whitespace-nowrap">{client}</span>
+                     <img
+                     src={client.logo}
+                     alt={client.name}
+                     className="h-8 w-auto object-contain"
+                     />
                 </div>
               ))}
             </div>
@@ -556,64 +628,250 @@ function App() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 lg:py-28 px-6 bg-[#EEF2F7]">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] mb-14">
-            <span className="text-obsidian">Let's put your brand</span>
-            <br />
-            <span className="text-electric-500">on every prime street.</span>
-          </h2>
+<section
+  id="contact"
+  className="py-20 lg:py-28 px-6 bg-[#EEF2F7]"
+>
+  <div className="max-w-7xl mx-auto">
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Phone Card */}
-            <div className="bg-white rounded-2xl p-8 border border-gray-100 flex flex-col gap-6">
-              <div className="w-12 h-12 bg-electric-50 rounded-xl flex items-center justify-center">
-                <Phone className="w-6 h-6 text-electric-500" strokeWidth={1.5} />
-              </div>
-              <div>
-                <p className="section-header mb-3">Phone</p>
-                <a
-                  href="tel:+918000310416"
-                  className="text-xl font-bold text-obsidian hover:text-electric-500 transition-colors"
-                >
-                  +91 80003-10416
-                </a>
-              </div>
+    {/* Heading */}
+    <div className="max-w-4xl mb-14">
+      <h2 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05]">
+        <span className="text-obsidian">
+          Let's put your brand
+        </span>
+        <br />
+        <span className="text-electric-500">
+          on every prime street.
+        </span>
+      </h2>
+
+      <p className="mt-6 max-w-2xl text-base md:text-lg text-gray-600 leading-relaxed">
+        Tell us about your project and let's create something
+        meaningful together.
+      </p>
+    </div>
+
+    {/* Query Form */}
+    <div className="max-w-5xl mx-auto">
+
+      <div className="bg-white rounded-[28px] border border-gray-200 p-6 md:p-10 lg:p-12 shadow-[0_20px_60px_rgba(20,40,70,0.08)]">
+
+        <h3 className="text-2xl md:text-3xl font-bold text-obsidian mb-8">
+          Tell us about your project
+        </h3>
+
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-6"
+        >
+
+          {/* Full Name + Email */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            {/* Full Name */}
+            <div>
+              <label
+                htmlFor="fullName"
+                className="block text-sm font-medium text-obsidian mb-2"
+              >
+                Full Name <span className="text-electric-500">*</span>
+              </label>
+
+              <input
+                id="fullName"
+                name="fullName"
+                type="text"
+                value={formData.fullName}
+                onChange={handleInputChange}
+                placeholder="Alex Johnson"
+                required
+                className="w-full rounded-2xl border border-gray-300 bg-white px-5 py-4 text-obsidian outline-none placeholder:text-gray-400 transition-all duration-200 focus:border-electric-500 focus:ring-4 focus:ring-electric-500/10"
+              />
             </div>
 
-            {/* Email Card */}
-            <div className="bg-white rounded-2xl p-8 border border-gray-100 flex flex-col gap-6">
-              <div className="w-12 h-12 bg-electric-50 rounded-xl flex items-center justify-center">
-                <Mail className="w-6 h-6 text-electric-500" strokeWidth={1.5} />
-              </div>
-              <div>
-                <p className="section-header mb-3">Email</p>
-                <a
-                  href="mailto:help@primestreetmedia.com"
-                  className="text-xl font-bold text-obsidian hover:text-electric-500 transition-colors"
-                >
-                  help@primestreetmedia.com
-                </a>
-              </div>
+            {/* Work Email */}
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-obsidian mb-2"
+              >
+                Work Email <span className="text-electric-500">*</span>
+              </label>
+
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="alex@company.com"
+                required
+                className="w-full rounded-2xl border border-gray-300 bg-white px-5 py-4 text-obsidian outline-none placeholder:text-gray-400 transition-all duration-200 focus:border-electric-500 focus:ring-4 focus:ring-electric-500/10"
+              />
             </div>
 
-            {/* Studio Card */}
-            <div className="bg-white rounded-2xl p-8 border border-gray-100 flex flex-col gap-6">
-              <div className="w-12 h-12 bg-electric-50 rounded-xl flex items-center justify-center">
-                <MapPin className="w-6 h-6 text-electric-500" strokeWidth={1.5} />
-              </div>
-              <div>
-                <p className="section-header mb-3">Studio</p>
-                <address className="not-italic text-xl font-bold text-obsidian leading-relaxed">
-                  372, 100 Feet Rd,<br />
-                  HAL 2nd Stage, Indiranagar,<br />
-                  Bangalore, 560008, IN
-                </address>
-              </div>
-            </div>
           </div>
+
+          {/* Company */}
+          <div>
+            <label
+              htmlFor="company"
+              className="block text-sm font-medium text-obsidian mb-2"
+            >
+            Company  <span className="text-electric-500">*</span>
+            </label>
+
+            <input
+              id="company"
+              name="company"
+              type="text"
+              value={formData.company}
+              onChange={handleInputChange}
+              placeholder="Company name"
+              className="w-full rounded-2xl border border-gray-300 bg-white px-5 py-4 text-obsidian outline-none placeholder:text-gray-400 transition-all duration-200 focus:border-electric-500 focus:ring-4 focus:ring-electric-500/10"
+              required
+           />
+          </div>
+
+
+
+          {/* Project Message */}
+          <div>
+            <label
+              htmlFor="message"
+              className="block text-sm font-medium text-obsidian mb-2"
+            >
+              Comment Here:{" "}
+              <span className="text-electric-500">*</span>
+            </label>
+
+            <textarea
+              id="message"
+              name="message"
+              rows={7}
+              value={formData.message}
+              onChange={handleInputChange}
+              placeholder="Describe your challenge, current state, and desired outcome..."
+              required
+              className="w-full resize-none rounded-2xl border border-gray-300 bg-white px-5 py-4 text-obsidian outline-none placeholder:text-gray-400 transition-all duration-200 focus:border-electric-500 focus:ring-4 focus:ring-electric-500/10"
+            />
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={sending}
+            className="group flex w-full items-center justify-center gap-3 rounded-2xl bg-electric-500 px-6 py-5 text-base font-semibold text-white transition-all duration-300 hover:bg-electric-600 hover:shadow-[0_12px_30px_rgba(8,124,255,0.25)] disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {sending ? "Sending..." : "Send Message"}
+
+            {!sending && (
+              <span className="text-xl transition-transform duration-300 group-hover:translate-x-1">
+                →
+              </span>
+            )}
+          </button>
+
+          {/* Success Message */}
+          {submitted && (
+            <div className="rounded-2xl border border-green-200 bg-green-50 px-5 py-4 text-center text-sm font-medium text-green-700">
+              Thank you! Your query has been sent successfully.
+            </div>
+          )}
+
+          {/* Privacy */}
+          <p className="text-center text-sm text-gray-500">
+            We respect your privacy. No spam, ever.
+          </p>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{/* Contact Details */}
+<section className="bg-[#EEF2F7] px-6 pb-20">
+  <div className="max-w-7xl mx-auto">
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      {/* Phone */}
+      <div className="bg-white rounded-2xl p-8 border border-gray-100 flex flex-col gap-6">
+        <div className="w-12 h-12 bg-electric-50 rounded-xl flex items-center justify-center">
+          <Phone
+            className="w-6 h-6 text-electric-500"
+            strokeWidth={1.5}
+          />
         </div>
-      </section>
+
+        <div>
+          <p className="section-header mb-3">
+            Phone
+          </p>
+
+          <a
+            href="tel:+918000310416"
+            className="text-xl font-bold text-obsidian hover:text-electric-500 transition-colors"
+          >
+            +91 80003-10416
+          </a>
+        </div>
+      </div>
+
+      {/* Email */}
+      <div className="bg-white rounded-2xl p-8 border border-gray-100 flex flex-col gap-6">
+        <div className="w-12 h-12 bg-electric-50 rounded-xl flex items-center justify-center">
+          <Mail
+            className="w-6 h-6 text-electric-500"
+            strokeWidth={1.5}
+          />
+        </div>
+
+        <div>
+          <p className="section-header mb-3">
+            Email
+          </p>
+
+          <a
+            href="mailto:help@primestreetmedia.com"
+            className="text-xl font-bold text-obsidian hover:text-electric-500 transition-colors break-all"
+          >
+            help@primestreetmedia.com
+          </a>
+        </div>
+      </div>
+
+      {/* Studio */}
+      <div className="bg-white rounded-2xl p-8 border border-gray-100 flex flex-col gap-6">
+        <div className="w-12 h-12 bg-electric-50 rounded-xl flex items-center justify-center">
+          <MapPin
+            className="w-6 h-6 text-electric-500"
+            strokeWidth={1.5}
+          />
+        </div>
+
+        <div>
+          <p className="section-header mb-3">
+            ADDRESS
+          </p>
+
+          <address className="not-italic text-xl font-bold text-obsidian leading-relaxed">
+            372, 100 Feet Rd,
+            <br />
+            HAL 2nd Stage, Indiranagar,
+            <br />
+            Bangalore, 560008, IN
+          </address>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
 
       {/* Footer */}
       <footer className="border-t border-gray-100 py-16 px-6">
