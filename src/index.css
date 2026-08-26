@@ -82,8 +82,23 @@
   /* iOS Safari can drop animated content when it is composited inside a CSS mask. */
   @supports (-webkit-touch-callout: none) {
     .marquee-track {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
       -webkit-mask-image: none;
       mask-image: none;
+      scrollbar-width: none;
+    }
+
+    .marquee-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .marquee-inner--fwd {
+      animation: none;
+    }
+
+    .marquee-inner img:nth-child(n + 21) {
+      display: none;
     }
   }
 }
