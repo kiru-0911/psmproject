@@ -592,7 +592,7 @@ function App() {
           {/* Sliding Marquee */}
           <div className="marquee-track">
             <div className="marquee-inner marquee-inner--fwd">
-              {[...clients, ...clients, ...clients, ...clients].map((client, index) => (
+              {[...clients, ...clients].map((client, index) => (
                 <img
                   key={index}
                   src={client.logo}

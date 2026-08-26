@@ -56,14 +56,16 @@
   }
 
   .marquee-track {
+    width: 100%;
+    max-width: 100%;
     overflow: hidden;
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
     mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
   }
 
   .marquee-inner {
-    display: flex;
-    width: max-content;
+    display: inline-flex;
+    min-width: max-content;
     will-change: transform;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
